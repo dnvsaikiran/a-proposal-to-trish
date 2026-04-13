@@ -9,6 +9,7 @@ import couple1Anime from '../assets/couple_1_anime.png';
 import couple2Anime from '../assets/couple_2_anime.png';
 import girlWithCat from '../assets/girl_with_cat.png';
 import step2Bg from '../assets/decor/background_step2_final.png';
+import paperBg from '../assets/decor/japanese_paper.png';
 
 const TypewriterText = ({ text }) => {
   const [displayText, setDisplayText] = useState('');
@@ -76,12 +77,15 @@ const GreetingFlow = ({ onComplete }) => {
     {
       id: "anime_couple_1",
       content: (
-        <div className="text-center px-6 max-w-2xl mx-auto">
-          <h2 className="text-2xl font-hindi mb-10 text-black">Aisa lagta hai jaise koi anime movie chal rahi ho... 🎬</h2>
-          <div className="glass-premium p-4 rounded-[2rem] mb-12">
-            <img src={couple1Anime} className="w-full h-[450px] object-cover rounded-[1.5rem] shadow-huge" />
+        <div className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 z-0 bg-cover bg-center brightness-110" style={{ backgroundImage: `url("${paperBg}")` }}></div>
+          <div className="relative z-10 text-center px-6 max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-5xl font-hindi text-black mb-10 leading-relaxed drop-shadow-sm">Aisa lagta hai jaise koi anime movie chal rahi ho... 🎬</h2>
+            <div className="glass-premium p-4 rounded-[2rem] mb-12 border-white/50">
+              <img src={couple1Anime} className="w-full h-[450px] object-cover rounded-[1.5rem] shadow-huge" />
+            </div>
+            <button onClick={nextStep} className="btn-romantic">Suno... ❤️</button>
           </div>
-          <button onClick={nextStep} className="btn-romantic">Aage Badho ✨</button>
         </div>
       )
     },
@@ -89,12 +93,16 @@ const GreetingFlow = ({ onComplete }) => {
     {
       id: "anime_couple_2",
       content: (
-        <div className="text-center px-6 max-w-2xl mx-auto">
-          <h2 className="text-2xl font-hindi mb-10 text-black">Har pal tumhare saath ek kahani jaisa hai. 📖</h2>
-          <div className="glass-premium p-4 rounded-[2rem] mb-12">
-            <img src={couple2Anime} className="w-full h-[450px] object-cover rounded-[1.5rem] shadow-huge" />
+        <div className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 z-0 bg-cover bg-center brightness-110" style={{ backgroundImage: `url("${paperBg}")` }}></div>
+          <div className="relative z-10 text-center px-6 max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-5xl font-hindi text-black mb-10 leading-relaxed drop-shadow-sm">Har pal tumhare saath ek kahani jaisa hai. 📖</h2>
+            <div className="glass-premium p-4 rounded-[2rem] mb-12 border-white/50">
+              <img src={couple2Anime} className="w-full h-[450px] object-cover rounded-[1.5rem] shadow-huge" />
+            </div>
+            <button onClick={nextStep} className="btn-romantic">Bas itna hi? 😏</button>
           </div>
-          <button onClick={nextStep} className="btn-romantic">Bas itna hi? 😏</button>
+          <AutoNext onTrigger={nextStep} delay={5000} />
         </div>
       )
     },
@@ -151,6 +159,14 @@ const GreetingFlow = ({ onComplete }) => {
       </AnimatePresence>
     </div>
   );
+};
+
+const AutoNext = ({ onTrigger, delay }) => {
+  useEffect(() => {
+    const t = setTimeout(onTrigger, delay);
+    return () => clearTimeout(t);
+  }, [onTrigger, delay]);
+  return null;
 };
 
 export default GreetingFlow;

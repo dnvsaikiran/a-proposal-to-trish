@@ -24,6 +24,27 @@ const Typewriter = ({ text, onComplete, delay = 50 }) => {
   return <span>{displayedText}</span>;
 };
 
+const FallingComet = () => (
+  <motion.div
+    initial={{ x: "-10vw", y: "-10vh", opacity: 0 }}
+    animate={{ 
+      x: "110vw", 
+      y: "40vh", 
+      opacity: [0, 1, 1, 0],
+      scale: [0.5, 1, 1, 0.5] 
+    }}
+    transition={{ 
+      duration: 3, 
+      repeat: Infinity, 
+      repeatDelay: 8,
+      ease: "linear" 
+    }}
+    className="fixed z-20 pointer-events-none"
+  >
+    <div className="w-40 h-0.5 bg-gradient-to-r from-transparent via-yellow-200 to-white blur-[1px] rotate-[15deg] shadow-[0_0_20px_white]"></div>
+  </motion.div>
+);
+
 const ClockWaiting = ({ onComplete }) => {
   const [phase, setPhase] = useState('intro'); // intro, clock
   const [introStep, setIntroStep] = useState(0);
@@ -60,10 +81,12 @@ const ClockWaiting = ({ onComplete }) => {
       {/* Background */}
       <motion.div 
         initial={{ opacity: 0 }}
-        animate={{ opacity: phase === 'clock' ? 0.6 : 0.3 }}
-        className="absolute inset-0 z-0 bg-cover bg-center"
+        animate={{ opacity: phase === 'clock' ? 0.7 : 0.4 }}
+        className="absolute inset-0 z-0 bg-cover bg-center brightness-90"
         style={{ backgroundImage: `url("${nightBg}")` }}
       />
+
+      <FallingComet />
 
       <AnimatePresence mode="wait">
         {phase === 'intro' ? (
@@ -90,47 +113,47 @@ const ClockWaiting = ({ onComplete }) => {
             className="relative z-10 flex flex-col items-center gap-12"
           >
             {/* Elegant Cinematic Clock */}
-            <div className="relative w-64 h-64 border-4 border-white/20 rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(255,255,255,0.1)] backdrop-blur-sm">
+            <div className="relative w-72 h-72 border-4 border-white/20 rounded-full flex items-center justify-center shadow-[0_0_60px_rgba(255,255,255,0.1)] backdrop-blur-md">
               <div className="absolute w-full h-full rounded-full border border-white/5 animate-pulse"></div>
               
               {/* Clock Hands */}
               <motion.div 
                 animate={{ rotate: 360 }}
                 transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-                className="absolute w-1 h-24 bg-white/40 bottom-1/2 origin-bottom rounded-full"
+                className="absolute w-1.5 h-28 bg-white/40 bottom-1/2 origin-bottom rounded-full"
               />
               <motion.div 
                 animate={{ rotate: 360 }}
-                transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-                className="absolute w-0.5 h-28 bg-yellow-400 bottom-1/2 origin-bottom rounded-full"
+                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                className="absolute w-0.5 h-32 bg-yellow-400 bottom-1/2 origin-bottom rounded-full shadow-[0_0_10px_orange]"
               />
               
               {/* Clock Center */}
-              <div className="w-4 h-4 bg-white rounded-full z-20 shadow-lg"></div>
+              <div className="w-5 h-5 bg-white rounded-full z-20 shadow-2xl"></div>
               
               {/* Hour markers */}
               {[...Array(12)].map((_, i) => (
                 <div 
                   key={i} 
-                  className="absolute w-1 h-4 bg-white/20" 
-                  style={{ transform: `rotate(${i * 30}deg) translateY(-110px)` }}
+                  className="absolute w-1.5 h-6 bg-white/30" 
+                  style={{ transform: `rotate(${i * 30}deg) translateY(-125px)` }}
                 />
               ))}
             </div>
 
             <div className="text-center">
-              <h3 className="text-4xl md:text-6xl font-hindi tracking-widest text-white/80">
+              <h3 className="text-5xl md:text-7xl font-hindi tracking-[0.2em] text-white/90 drop-shadow-xl">
                 Waiting{dots}
               </h3>
-              <p className="mt-6 text-xl font-royal italic text-white/40">The stars are aligned, and so am I.</p>
+              <p className="mt-8 text-2xl font-royal italic text-white/50 tracking-widest">Everything is and will always be yours.</p>
             </div>
 
             <motion.button
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 5 }}
+              transition={{ delay: 8 }}
               onClick={onComplete}
-              className="mt-12 px-8 py-3 bg-white/5 hover:bg-white/10 text-white/30 rounded-full text-sm tracking-[0.3em] uppercase transition-all"
+              className="mt-16 px-10 py-4 bg-white/5 hover:bg-white/10 text-white/20 rounded-full text-xs tracking-[0.4em] uppercase transition-all border border-white/5"
             >
               Restart Journey
             </motion.button>
@@ -138,22 +161,22 @@ const ClockWaiting = ({ onComplete }) => {
         )}
       </AnimatePresence>
 
-      {/* Floating Particles */}
+      {/* Floating Stardust */}
       <div className="absolute inset-0 pointer-events-none">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(40)].map((_, i) => (
           <motion.div
             key={i}
             animate={{ 
-              y: [-20, -100],
-              opacity: [0, 0.5, 0],
-              x: Math.random() * 100 - 50
+              y: [-10, -50],
+              opacity: [0, 0.4, 0],
+              scale: [0.5, 1, 0.5]
             }}
             transition={{ 
-              duration: Math.random() * 5 + 5, 
+              duration: Math.random() * 4 + 4, 
               repeat: Infinity,
               delay: Math.random() * 5
             }}
-            className="absolute w-1 h-1 bg-white rounded-full"
+            className="absolute w-1 h-1 bg-white/60 rounded-full shadow-[0_0_5px_white]"
             style={{ 
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`

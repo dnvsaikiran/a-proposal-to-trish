@@ -30,6 +30,7 @@ const ClockWaiting = ({ onComplete }) => {
   const [dots, setDots] = useState('');
 
   const introSequence = [
+    { text: "yeah i forgot to tell you", nextDelay: 1000 },
     { text: "happy birthday to my human dairy sambhavi", nextDelay: 1000 },
     { text: "wait... maybe this is more correct...", nextDelay: 1000 },
     { text: "happy birthday to my human dairy trish", nextDelay: 1000 },
@@ -73,11 +74,11 @@ const ClockWaiting = ({ onComplete }) => {
             exit={{ opacity: 0, y: -20 }}
             className="relative z-10 text-center px-10 max-w-4xl"
           >
-            <h2 className={`text-3xl md:text-5xl font-hindi leading-relaxed ${introStep === 4 ? 'text-yellow-400 drop-shadow-[0_0_20px_rgba(250,204,21,0.8)] scale-110 font-bold transition-all duration-1000' : 'text-white/90'}`}>
+            <h2 className={`text-3xl md:text-5xl font-hindi leading-relaxed ${introStep === 5 ? 'text-yellow-400 drop-shadow-[0_0_20px_rgba(250,204,21,0.8)] scale-110 font-bold transition-all duration-1000' : 'text-white/90'}`}>
               <Typewriter 
                 text={introSequence[introStep].text} 
                 onComplete={handleIntroComplete}
-                delay={introStep === 4 ? 80 : 50}
+                delay={introStep === 5 ? 80 : 50}
               />
             </h2>
           </motion.div>

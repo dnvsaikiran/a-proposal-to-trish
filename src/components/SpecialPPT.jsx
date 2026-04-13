@@ -3,7 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { magicalRandomBurst } from '../utils/ParticleBurst';
 
 // Native Imports
-import coupleBackground from '../assets/couple_bg_special.png';
+import coupleConstant from '../assets/couple_bg_special.png';
+import bgCoffee from '../assets/gallery/coffeeshop.png';
+import bgMuseum from '../assets/gallery/museum.png';
+import bgAdventure from '../assets/gallery/adventure_park.png';
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -28,6 +31,8 @@ const photos = [
   "PHOTO-2026-04-13-16-17-17.jpg",
 ];
 
+const dynamicBackgrounds = [bgCoffee, bgMuseum, bgAdventure];
+
 const SpecialPPT = ({ onComplete }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -41,6 +46,7 @@ const SpecialPPT = ({ onComplete }) => {
   };
 
   const isLastSlide = currentIndex === photos.length - 1;
+  const currentBgLevel = currentIndex % dynamicBackgrounds.length;
 
   // Floating flowers positions
   const flowers = [
@@ -53,17 +59,36 @@ const SpecialPPT = ({ onComplete }) => {
 
   return (
     <div className="min-h-screen w-full relative flex flex-col items-center justify-center py-12 px-6 overflow-hidden bg-[#FFFDF5]">
-      {/* Floral Background Texture */}
-      <div className="absolute inset-0 floral-texture pointer-events-none"></div>
+      {/* GLOBAL BACKGROUND - Split Experience */}
+      <div className="absolute inset-0 z-0 flex pointer-events-none">
+        {/* Left Side: Dynamic Favorites */}
+        <div className="w-1/2 h-full relative overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.div 
+              key={currentBgLevel}
+              initial={{ opacity: 0, scale: 1.1 }}
+              animate={{ opacity: 0.3, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.1 }}
+              transition={{ duration: 1.5 }}
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url("${dynamicBackgrounds[currentBgLevel]}")` }}
+            />
+          </AnimatePresence>
+        </div>
+        
+        {/* Right Side: Constant Couple */}
+        <div className="w-1/2 h-full relative overflow-hidden border-l border-black/5">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.25 }}
+            className="absolute inset-0 bg-cover bg-right"
+            style={{ backgroundImage: `url("${coupleConstant}")` }}
+          />
+        </div>
+      </div>
 
-      {/* Cinematic Background Companion - The Couple */}
-      <motion.div 
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 0.25, x: 0 }}
-        className="absolute bottom-0 right-[-5%] w-[600px] pointer-events-none z-0"
-      >
-        <img src={coupleBackground} alt="" className="w-full h-auto" />
-      </motion.div>
+      {/* Floral Background Texture Overlay */}
+      <div className="absolute inset-0 floral-texture pointer-events-none z-1"></div>
 
       {/* Floating Flowers */}
       {flowers.map(f => (
@@ -90,14 +115,15 @@ const SpecialPPT = ({ onComplete }) => {
           </div>
           <button 
             onClick={nextSlide}
-            className="btn-romantic !px-6 !py-2 !text-sm"
+            className="btn-3d-romantic"
           >
-            {isLastSlide ? "Next Journey →" : "Next Photo →"}
+            <span>{isLastSlide ? "Next Journey" : "Next Photo"}</span>
+            <span className="heart-beat">💙</span>
           </button>
         </div>
 
-        <div className="relative aspect-[4/5] md:aspect-video w-full rounded-[3rem] overflow-hidden shadow-huge glass-premium p-6">
-          {/* Floral Corner Ornaments (Lilies and Tube Roses) */}
+        <div className="relative aspect-[4/5] md:aspect-video w-full rounded-[3rem] overflow-hidden shadow-huge glass-premium p-6 bg-white/40">
+          {/* Floral Corner Ornaments */}
           <div className="flower-corner top-4 left-4">🤍</div>
           <div className="flower-corner top-4 right-4">🌸</div>
           <div className="flower-corner bottom-4 left-4">🌸</div>
@@ -110,12 +136,12 @@ const SpecialPPT = ({ onComplete }) => {
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
               exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
               transition={{ duration: 0.8, ease: "anticipate" }}
-              className="w-full h-full relative"
+              className="w-full h-full relative flex items-center justify-center"
             >
               <img 
                 src={`${BASE}photos/${photos[currentIndex]}`}
                 alt={`Memory ${currentIndex}`}
-                className="w-full h-full object-cover rounded-[2rem] shadow-2xl"
+                className="max-w-full max-h-full object-contain rounded-[2rem] shadow-2xl"
               />
 
               {/* Romantic Hinglish Message for the Last Photo */}
@@ -141,7 +167,7 @@ const SpecialPPT = ({ onComplete }) => {
           </AnimatePresence>
           
           {/* Subtle Decorative Frame */}
-          <div className="absolute inset-8 pointer-events-none border-[2px] border-white/30 rounded-[2.5rem] shadow-inner"></div>
+          <div className="absolute inset-8 pointer-events-none border-[2px] border-white/10 rounded-[2.5rem] shadow-inner"></div>
         </div>
 
         <div className="mt-12 w-full bg-black/5 h-2 rounded-full overflow-hidden backdrop-blur-sm">

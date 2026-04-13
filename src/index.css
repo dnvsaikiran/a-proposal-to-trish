@@ -86,6 +86,27 @@
     @apply scale-95;
   }
 
+  .btn-3d-romantic {
+    @apply relative px-8 py-3 bg-[#191970] text-white rounded-xl font-bold transition-all duration-300 shadow-[0_5px_0_#0a0a40] active:shadow-none active:translate-y-[5px] flex items-center gap-2;
+  }
+
+  .btn-3d-romantic:hover {
+    @apply brightness-110 -translate-y-[2px] shadow-[0_7px_0_#0a0a40];
+  }
+
+  .btn-3d-romantic:active {
+    @apply translate-y-[5px] shadow-none;
+  }
+
+  .heart-beat {
+    animation: heart-beat 1s ease-in-out infinite;
+  }
+
+  @keyframes heart-beat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+
   .scroll-progress {
     @apply fixed top-0 left-0 h-1 bg-black z-[1000] shadow-[0_0_10px_rgba(0,0,0,0.5)];
   }

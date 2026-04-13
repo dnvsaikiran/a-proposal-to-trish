@@ -70,7 +70,7 @@ const CustomCursor = () => {
           translateY: "-50%",
         }}
       >
-        <span className="text-xl">🤍</span>
+        <span className="text-xl">💙</span>
       </motion.div>
 
       {/* Heart Trail */}
@@ -83,7 +83,7 @@ const CustomCursor = () => {
           className="fixed text-white opacity-40 select-none"
           style={{ left: point.x, top: point.y, translateX: "-50%", translateY: "-50%" }}
         >
-          🤍
+          💙
         </motion.div>
       ))}
     </div>

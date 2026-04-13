@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { grandCelebration } from '../utils/ParticleBurst';
 
 // Native Imports for reliable deployment
-import beachAnime from '../assets/beach_anime.png';
+import beachAnime from '../assets/beach_intro_final.png';
 import firstMetAnime from '../assets/first_met_anime.png';
 import couple1Anime from '../assets/couple_1_anime.png';
 import couple2Anime from '../assets/couple_2_anime.png';

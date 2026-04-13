@@ -2,15 +2,21 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { celebrate } from '../utils/ParticleBurst';
 
+// Native Imports
+import cafeBackground from '../assets/cafe.png';
+
+const BASE = import.meta.env.BASE_URL;
+
 const CoffeeInvite = ({ onComplete }) => {
   const [noButtonState, setNoButtonState] = useState({
     scale: 1,
-    label: "No 🙈",
+    label: "Nahi 🙈",
     clicks: 0
   });
+  const [isAccepted, setIsAccepted] = useState(false);
 
   const noLabels = [
-    "No?", "Socho firse", "Pakka?", "Itna bhi kya", 
+    "Nahi?", "Socho firse", "Pakka?", "Itna bhi kya", 
     "Arey yaar", "Last try", "Tiny no"
   ];
 
@@ -29,68 +35,96 @@ const CoffeeInvite = ({ onComplete }) => {
 
   const handleYesClick = () => {
     celebrate();
-    setTimeout(onComplete, 2000);
+    setIsAccepted(true);
   };
 
   return (
-    <div className="min-h-[120vh] w-full relative flex flex-col items-center justify-center py-24 px-6 overflow-hidden">
-      {/* Background */}
+    <div className="min-h-screen w-full relative flex flex-col items-center justify-center py-24 px-6 overflow-hidden bg-romantic-white">
+      {/* Background Anime Cafe */}
       <div 
-        className="absolute inset-0 z-0 bg-cover bg-center brightness-90 scale-105"
-        style={{ backgroundImage: 'url("/assets/cafe.png")' }}
+        className="absolute inset-0 z-0 bg-cover bg-center brightness-75 scale-105 opacity-40 blur-sm"
+        style={{ backgroundImage: `url("${cafeBackground}")` }}
       ></div>
 
-      <div className="absolute inset-0 bg-white/20 z-10"></div>
-
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.9 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        className="relative z-20 glass w-full max-w-lg p-8 md:p-12 rounded-[3rem] text-center border-white/50"
-      >
-        <div className="space-y-6 mb-12 text-lg md:text-xl font-medium text-black/90 text-left md:text-center italic">
-          <p>Between UPSC pressure, dreams,</p>
-          <p>and binge-watching dark romance + manga...</p>
-          <p>Life gets heavy.</p>
-          <p className="font-bold text-black/80">Toh maine socha... thoda easy kar dete hain.</p>
-        </div>
-
-        <div className="space-y-4 mb-12">
-          <p className="text-xl">Spend some evenings with me.</p>
-          <p className="text-xl">A little laughter. A little peace.</p>
-          <p className="text-2xl font-bold text-black font-royal">A little coffee. ☕</p>
-        </div>
-
-        <h3 className="text-xl font-bold mb-12 tracking-wide leading-relaxed">
-          So I officially invite you... <br />
-          <span className="text-2xl text-black font-royal font-black">For one cup of coffee with me every evening</span>
-        </h3>
-
-        {noButtonState.scale === 0 && (
-          <p className="text-black font-bold mb-4 animate-bounce">
-            Navigation complete. Destination = Yes 💘
-          </p>
-        )}
-
-        <div className="flex flex-col items-center gap-6">
-          <motion.button
-            onClick={handleYesClick}
-            animate={{ scale: noButtonState.scale === 0 ? 1.4 : 1.1 }}
-            className="w-full py-5 bg-black text-white rounded-2xl font-black text-xl shadow-2xl hover:bg-gray-900 transition-colors"
+      <AnimatePresence mode="wait">
+        {!isAccepted ? (
+          <motion.div 
+            key="invite"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.1 }}
+            className="relative z-20 glass-premium w-full max-w-2xl p-8 md:p-12 rounded-[4rem] text-center"
           >
-            Yes ✨
-          </motion.button>
+            <h2 className="text-3xl md:text-5xl font-hindi text-black mb-8 leading-relaxed">
+              Itni mehnat ke baad, mere saath ek cup coffee? ☕❤️
+            </h2>
+            
+            <div className="w-full aspect-video rounded-[2rem] overflow-hidden mb-10 shadow-huge bg-black">
+              <video 
+                src={`${BASE}photos/VIDEO-2026-04-13-15-19-29.mp4`} 
+                controls 
+                autoPlay 
+                loop 
+                muted 
+                className="w-full h-full object-cover"
+              />
+            </div>
 
-          {noButtonState.scale > 0 && (
-            <motion.button
-              onClick={handleNoClick}
-              animate={{ scale: noButtonState.scale }}
-              className="px-10 py-3 bg-white/20 text-white rounded-xl font-medium text-lg border border-white/40"
+            <p className="text-xl font-hindi text-black/70 mb-12">
+              Chalo thodi der ke liye duniya bhul jaate hain.
+            </p>
+
+            {noButtonState.scale === 0 && (
+              <p className="text-black font-bold mb-4 animate-bounce">
+                Ab toh sirf 'Haan' hi option hai madam ji! 😉
+              </p>
+            )}
+
+            <div className="flex flex-col items-center gap-6">
+              <motion.button
+                onClick={handleYesClick}
+                animate={{ scale: noButtonState.scale === 0 ? 1.4 : 1.1 }}
+                className="btn-romantic w-full py-5 text-xl bg-black text-white hover:bg-black/90"
+              >
+                Bilkul! ✨
+              </motion.button>
+
+              {noButtonState.scale > 0 && (
+                <motion.button
+                  onClick={handleNoClick}
+                  animate={{ scale: noButtonState.scale }}
+                  className="px-10 py-3 bg-white/40 text-black/60 rounded-full font-medium border border-black/10"
+                >
+                  {noButtonState.label}
+                </motion.button>
+              )}
+            </div>
+          </motion.div>
+        ) : (
+          <motion.div 
+            key="success"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="relative z-20 text-center glass-premium p-16 rounded-[4rem]"
+          >
+            <h1 className="text-6xl mb-8">💖</h1>
+            <h2 className="text-4xl font-hindi text-black mb-6">See you soon, Sonu!</h2>
+            <p className="text-xl font-hindi text-black/60 mb-12">I knew you couldn't say no. Prepare for the best coffee date! ☕✨</p>
+            <button 
+              onClick={onComplete}
+              className="px-8 py-3 bg-black text-white rounded-full font-bold"
             >
-              {noButtonState.label}
-            </motion.button>
-          )}
-        </div>
-      </motion.div>
+              Finish Journey
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className="wave-container fixed bottom-0 left-0">
+        <svg viewBox="0 24 150 28" preserveAspectRatio="none" className="wave-path">
+          <use href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,1)" />
+        </svg>
+      </div>
     </div>
   );
 };

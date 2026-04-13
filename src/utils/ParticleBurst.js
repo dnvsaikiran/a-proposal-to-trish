@@ -16,12 +16,11 @@ export const celebrate = () => {
 
     const particleCount = 50 * (timeLeft / duration);
     
-    // Minimalist colors: White, Silver, Black, and tiny touches of Pink
     confetti({
       ...defaults,
       particleCount,
       origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
-      colors: ['#ffffff', '#000000', '#e5e5e5', '#FFB6C1'] // Tiny bit of pink
+      colors: ['#ffffff', '#000000', '#e5e5e5', '#FFB6C1']
     });
     confetti({
       ...defaults,
@@ -33,16 +32,51 @@ export const celebrate = () => {
 };
 
 export const coffeeBurst = () => {
-  const scalar = 2;
+  const scalar = 2.5;
   const coffee = confetti.shapeFromText({ text: '☕', scalar });
-  const flower = confetti.shapeFromText({ text: '🌸', scalar }); // Tiny pink heart replacement
-  const lily = confetti.shapeFromText({ text: '🤍', scalar });
+  const heart = confetti.shapeFromText({ text: '🤎', scalar });
 
   confetti({
-    shapes: [coffee, flower, lily],
-    particleCount: 80,
+    shapes: [coffee, heart],
+    particleCount: 40,
     spread: 70,
     origin: { y: 0.6 },
-    colors: ['#6F4E37', '#ffffff', '#000000', '#FFB6C1']
+    colors: ['#6F4E37', '#ffffff']
   });
+};
+
+export const catBurst = () => {
+  const scalar = 2.5;
+  const cat1 = confetti.shapeFromText({ text: '🐱', scalar });
+  const cat2 = confetti.shapeFromText({ text: '🐈', scalar });
+  const paw = confetti.shapeFromText({ text: '🐾', scalar });
+
+  confetti({
+    shapes: [cat1, cat2, paw],
+    particleCount: 40,
+    spread: 80,
+    origin: { y: 0.6 },
+    colors: ['#ffffff', '#000000', '#FFB6C1']
+  });
+};
+
+export const flowerBurst = () => {
+  const scalar = 3;
+  const lily = confetti.shapeFromText({ text: '🤍', scalar }); // Lily representation
+  const rose = confetti.shapeFromText({ text: '🌸', scalar }); // Tuberose/Rose representation
+  const leaf = confetti.shapeFromText({ text: '🌿', scalar });
+
+  confetti({
+    shapes: [lily, rose, leaf],
+    particleCount: 50,
+    spread: 100,
+    origin: { y: 0.6 },
+    colors: ['#ffffff', '#FFB6C1', '#90EE90']
+  });
+};
+
+export const magicalRandomBurst = () => {
+  const bursts = [celebrate, coffeeBurst, catBurst, flowerBurst];
+  const randomBurst = bursts[Math.floor(Math.random() * bursts.length)];
+  randomBurst();
 };

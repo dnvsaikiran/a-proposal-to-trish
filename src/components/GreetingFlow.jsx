@@ -1,32 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { coffeeBurst } from '../utils/ParticleBurst';
 
+// Native Imports for reliable deployment
+import beachAnime from '../assets/beach_anime.png';
+import firstMetAnime from '../assets/first_met_anime.png';
+import couple1Anime from '../assets/couple_1_anime.png';
+import couple2Anime from '../assets/couple_2_anime.png';
+import girlWithCat from '../assets/girl_with_cat.png';
+
+const TypewriterText = ({ text }) => {
+  const [displayText, setDisplayText] = useState('');
+  useEffect(() => {
+    let i = 0;
+    const interval = setInterval(() => {
+      setDisplayText(text.slice(0, i));
+      i++;
+      if (i > text.length) clearInterval(interval);
+    }, 50);
+    return () => clearInterval(interval);
+  }, [text]);
+  return <span>{displayText}</span>;
+}
+
 const GreetingFlow = ({ onComplete }) => {
   const [step, setStep] = useState(0);
-  const [noButtonState, setNoButtonState] = useState({
-    scale: 1,
-    label: "No",
-    clicks: 0
-  });
-
-  const noLabels = [
-    "No?", "Are you sure?", "Think again", "Pakka?", 
-    "Last chance?", "Still no?", "Tiny no", "Oops"
-  ];
-
-  const handleNoClick = () => {
-    if (noButtonState.clicks >= noLabels.length - 1) {
-      setNoButtonState(prev => ({ ...prev, scale: 0 }));
-      return;
-    }
-    setNoButtonState(prev => ({
-      ...prev,
-      scale: Math.max(0.1, prev.scale - 0.15),
-      label: noLabels[prev.clicks + 1],
-      clicks: prev.clicks + 1
-    }));
-  };
+  const [showTease, setShowTease] = useState(false);
 
   const nextStep = () => {
     setStep(s => s + 1);
@@ -34,164 +33,114 @@ const GreetingFlow = ({ onComplete }) => {
   };
 
   const steps = [
-    // Section 0A: Greeting
+    // Step 1: Cinematic Intro
     {
-      id: "greeting",
+      id: "intro",
       content: (
-        <div className="text-center px-6">
-          <h2 className="text-2xl font-royal mb-8 text-black">Hey Sonu... how was your day today? ✨</h2>
-          <div className="flex flex-col gap-4 max-w-xs mx-auto">
-            <button onClick={nextStep} className="btn-premium">Nice 😊</button>
-            <button onClick={nextStep} className="btn-premium">Fine 🙂</button>
-            <button onClick={nextStep} className="btn-premium">Bad 😔</button>
-          </div>
-        </div>
-      )
-    },
-    // Section 0B: Anime Cat
-    {
-      id: "cat",
-      content: (
-        <div className="text-center px-6">
-          <h2 className="text-xl font-medium mb-6 text-black/70">Guess this might make you happy...</h2>
-          <motion.img 
-            src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3YybWxmZ3Z6Z3hyZ3hyZ3hyZ3hyZ3hyZ3hyZ3hyZ3hyZ3hyZ3hyZ3hyZ3hyZ3hyZ3hyZ3hyeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/VbnUQpnihPSIgIXOnP/giphy.gif" 
-            alt="Cute anime cat"
-            className="w-48 h-48 mx-auto rounded-3xl mb-8 object-cover shadow-2xl border-4 border-white"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-          />
-          <div className="flex gap-4 justify-center">
-            <button onClick={nextStep} className="px-8 py-3 bg-black text-white rounded-full font-bold shadow-lg">Enough 😌</button>
-            <button onClick={nextStep} className="px-8 py-3 border-2 border-black text-black rounded-full font-bold">Not Enough 😏</button>
-          </div>
-        </div>
-      )
-    },
-    // Section 0C: Flowers (White Tube Lilies)
-    {
-      id: "flowers",
-      content: (
-        <div className="text-center px-6">
-          <h2 className="text-xl font-medium mb-6 text-black/70">Maybe these flowers will make you happy 🌸</h2>
-          <div className="w-64 h-80 mx-auto rounded-3xl mb-8 overflow-hidden shadow-huge bg-gray-50 relative border-4 border-white">
-            <img 
-              src="https://images.unsplash.com/photo-1596708051772-4d05f3a09332?q=80&w=400" 
-              alt="White tube lilies"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="flex gap-4 justify-center">
-            <button onClick={nextStep} className="px-8 py-3 bg-black text-white rounded-full">Happy</button>
-            <button onClick={nextStep} className="px-8 py-3 border-2 border-black text-black rounded-full text-sm font-bold">Not Happy</button>
-          </div>
-        </div>
-      )
-    },
-    // Section 0D: Holi Memories (Gallery)
-    {
-      id: "holi",
-      content: (
-        <div className="text-center px-6 w-full max-w-md mx-auto">
-          <h2 className="text-xl font-medium mb-6 text-black/70">What about these memories? 🎨</h2>
-          <div className="flex gap-4 overflow-x-auto pb-6 snap-x no-scrollbar">
-            {[1, 2, 3, 4, 5].map(i => (
-              <div key={i} className="min-w-[280px] h-80 bg-gray-100 rounded-3xl snap-center flex-shrink-0 overflow-hidden shadow-2xl border-4 border-white relative group">
-                 <img 
-                  src={`https://images.unsplash.com/photo-1542332213-31f87348057f?q=80&w=400&i=${i}`} 
-                  alt={`Holi memory ${i}`}
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-                />
-                <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/20 to-transparent"></div>
-              </div>
-            ))}
-          </div>
-          <div className="flex gap-4 justify-center mt-6">
-            <button onClick={nextStep} className="btn-premium py-2">Happy</button>
-            <button onClick={nextStep} className="px-6 py-2 border-2 border-gray-200 text-gray-400 rounded-full text-xs">Not Happy</button>
-          </div>
-        </div>
-      )
-    },
-    // [NEW] Section: First Meeting
-    {
-      id: "first_met",
-      content: (
-          <div className="text-center px-6">
-          <h2 className="text-2xl font-royal mb-8 text-black">Do you remember this...? 🕰️</h2>
-          <div className="w-80 h-96 mx-auto rounded-3xl mb-12 overflow-hidden shadow-huge relative group border-8 border-white">
-            <img 
-              src="/photos/first_met.png" 
-              alt="Where we first met"
-              className="w-full h-full object-cover"
-              onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?auto=format&fit=crop&w=400"; }}
-            />
-          </div>
-          <p className="font-royal text-xl italic text-black/60 mb-12">The day our story truly began.</p>
-          <button onClick={nextStep} className="btn-premium">I remember ✨</button>
-        </div>
-      )
-    },
-    // Section 0E: Our Photo (Shrinking No)
-    {
-      id: "final_photo",
-      content: (
-        <div className="text-center px-6">
-          <h2 className="text-xl font-medium mb-6">This will surely make you happy... right? 💫</h2>
-          <div className="w-72 h-96 mx-auto rounded-3xl mb-12 overflow-hidden shadow-huge relative group border-4 border-white">
-            <img 
-              src="/photos/her_laughing.png" 
-              alt="Us together"
-              className="w-full h-full object-cover"
-              onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1542332213-31f87348057f?q=80&w=400"; }}
-            />
-          </div>
-
-          <div className="min-h-[140px] flex flex-col items-center justify-center">
-            {noButtonState.scale === 0 && (
-              <p className="text-black font-semibold mb-6 animate-bounce">
-                Guess you always had only one option 😉
-              </p>
-            )}
-
-            <div className="flex items-center justify-center gap-8">
-              <motion.button 
-                onClick={onComplete}
-                animate={{ scale: noButtonState.scale === 0 ? 1.5 : 1 + (noButtonState.clicks * 0.1) }}
-                className="px-12 py-5 bg-black text-white rounded-full font-black shadow-2xl z-20"
-              >
-                Yes
-              </motion.button>
-
-              {noButtonState.scale > 0 && (
-                <motion.button 
-                  onClick={handleNoClick}
-                  animate={{ scale: noButtonState.scale }}
-                  className="px-8 py-3 bg-white border-2 border-gray-200 text-gray-500 rounded-full font-medium"
-                >
-                  {noButtonState.label}
-                </motion.button>
-              )}
+        <div className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden" style={{ backgroundColor: '#FFFDF5' }}>
+          <div className="absolute inset-0 z-0 bg-cover bg-center brightness-90 animate-pulse-soft" style={{ backgroundImage: `url("${beachAnime}")`, backgroundSize: 'cover' }}></div>
+          <div className="absolute inset-0 z-10" style={{ background: 'linear-gradient(to bottom, transparent, rgba(255, 253, 245, 0.2), #FFFDF5)' }}></div>
+          
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="relative z-20 text-center px-6">
+            <h1 className="text-4xl md:text-6xl font-hindi text-black mb-6 drop-shadow-md">हे सोनू... ✨</h1>
+            <h2 className="text-xl md:text-2xl font-royal italic text-black/70 mb-12">How was your day today, madam ji?</h2>
+            <div className="flex flex-col gap-4 max-w-xs mx-auto">
+              {['Nice 😊', 'Fine 🙂', 'Bad 😔 (Make it better!)'].map((label, i) => (
+                <button key={i} onClick={nextStep} className="btn-romantic" style={{ padding: '16px 40px', borderRadius: '9999px', backgroundColor: 'rgba(255, 255, 255, 0.8)', border: '1px solid rgba(255, 255, 255, 0.5)', fontWeight: 'bold' }}>
+                  {label}
+                </button>
+              ))}
             </div>
-            
-            {noButtonState.clicks > 0 && noButtonState.scale > 0 && (
-              <p className="mt-6 text-gray-400 text-sm">Oh really? 😏 Think again.</p>
-            )}
+          </motion.div>
+        </div>
+      )
+    },
+    // Step 2: First Met
+    {
+      id: "anime_met",
+      content: (
+        <div className="text-center px-6 max-w-2xl mx-auto">
+          <h2 className="text-2xl font-hindi mb-10 text-black">Yaad hai hum pehli baar kab mile the? 🕰️</h2>
+          <div className="glass-premium p-4 rounded-[2rem] mb-12">
+            <img src={firstMetAnime} className="w-full h-[450px] object-cover rounded-[1.5rem] shadow-huge" />
           </div>
+          <button onClick={nextStep} className="btn-romantic">I remember ❤️</button>
+        </div>
+      )
+    },
+    // Step 3: Couple 1
+    {
+      id: "anime_couple_1",
+      content: (
+        <div className="text-center px-6 max-w-2xl mx-auto">
+          <h2 className="text-2xl font-hindi mb-10 text-black">Aisa lagta hai jaise koi anime movie chal rahi ho... 🎬</h2>
+          <div className="glass-premium p-4 rounded-[2rem] mb-12">
+            <img src={couple1Anime} className="w-full h-[450px] object-cover rounded-[1.5rem] shadow-huge" />
+          </div>
+          <button onClick={nextStep} className="btn-romantic">Aage Badho ✨</button>
+        </div>
+      )
+    },
+    // Step 4: Couple 2
+    {
+      id: "anime_couple_2",
+      content: (
+        <div className="text-center px-6 max-w-2xl mx-auto">
+          <h2 className="text-2xl font-hindi mb-10 text-black">Har pal tumhare saath ek kahani jaisa hai. 📖</h2>
+          <div className="glass-premium p-4 rounded-[2rem] mb-12">
+            <img src={couple2Anime} className="w-full h-[450px] object-cover rounded-[1.5rem] shadow-huge" />
+          </div>
+          <button onClick={nextStep} className="btn-romantic">Bas itna hi? 😏</button>
+        </div>
+      )
+    },
+    // Step 5: The Tease & Reality
+    {
+      id: "icloud_tease",
+      content: (
+        <div className="text-center px-6 max-w-md mx-auto">
+          <AnimatePresence mode="wait">
+            {!showTease ? (
+              <motion.div key="tease_btn" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <div className="glass-premium p-10 rounded-[3rem] border-dashed border-2 border-black/10">
+                  <h2 className="text-3xl font-hindi mb-6 text-black">Wait... Thoda aur bhi hai! ✋</h2>
+                  <p className="text-lg text-black/70 mb-8 leading-relaxed">Mera <span className="font-bold text-red-500">iCloud storage full</span> ho gaya tha...</p>
+                  <button onClick={() => setShowTease(true)} className="btn-romantic w-full">Bas itna hi? 😏</button>
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div key="tease_popup" initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="glass-premium p-10 rounded-[3rem] bg-white/90">
+                <h2 className="text-2xl font-hindi mb-6 text-black">
+                  <TypewriterText text="Wait... tumne sach mein socha bas itna hi hai? 😏 Thoda sabar madam ji, asli magic ab shuru hoga!" />
+                </h2>
+                <button onClick={onComplete} className="btn-romantic w-full mt-6 bg-black text-white">Reality Dekhao? ✨</button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       )
     }
   ];
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white relative z-10 overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-romantic-white relative z-10 overflow-hidden">
+      {/* Cat Companion in the corner */}
+      <motion.div 
+        animate={{ y: [0, -10, 0] }} 
+        transition={{ duration: 3, repeat: Infinity }}
+        className="fixed bottom-10 left-10 w-32 md:w-48 z-50 pointer-events-none drop-shadow-xl"
+      >
+        <img src={girlWithCat} alt="Cat Companion" className="w-full h-auto" />
+      </motion.div>
+
       <AnimatePresence mode="wait">
         <motion.div
           key={step}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          className="w-full"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 1.05 }}
+          transition={{ duration: 0.8 }}
+          className="w-full h-full flex items-center justify-center"
         >
           {steps[step]?.content}
         </motion.div>

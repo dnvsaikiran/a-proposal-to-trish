@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { magicalRandomBurst } from '../utils/ParticleBurst';
 
 // Native Imports
-import ghibliWoman from '../assets/girl_with_cat.png';
+import coupleBackground from '../assets/couple_bg_special.png';
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -56,13 +56,13 @@ const SpecialPPT = ({ onComplete }) => {
       {/* Floral Background Texture */}
       <div className="absolute inset-0 floral-texture pointer-events-none"></div>
 
-      {/* Ghibli Companion - Subtle Background Element */}
+      {/* Cinematic Background Companion - The Couple */}
       <motion.div 
         initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 0.15, x: 0 }}
-        className="absolute bottom-0 right-[-10%] w-[600px] pointer-events-none z-0"
+        animate={{ opacity: 0.25, x: 0 }}
+        className="absolute bottom-0 right-[-5%] w-[600px] pointer-events-none z-0"
       >
-        <img src={ghibliWoman} alt="" className="w-full h-auto grayscale-0" />
+        <img src={coupleBackground} alt="" className="w-full h-auto" />
       </motion.div>
 
       {/* Floating Flowers */}

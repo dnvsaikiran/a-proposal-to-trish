@@ -90,7 +90,7 @@ const SpecialPPT = ({ onComplete }) => {
           </div>
           <button 
             onClick={nextSlide}
-            className="text-sm font-bold uppercase tracking-widest text-black/60 hover:text-black transition-colors bg-white/50 px-6 py-2 rounded-full backdrop-blur-sm border border-black/5"
+            className="btn-romantic !px-6 !py-2 !text-sm"
           >
             {isLastSlide ? "Next Journey →" : "Next Photo →"}
           </button>

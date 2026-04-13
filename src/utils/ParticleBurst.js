@@ -20,13 +20,13 @@ export const celebrate = () => {
       ...defaults,
       particleCount,
       origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
-      colors: ['#ffffff', '#000000', '#e5e5e5', '#FFB6C1']
+      colors: ['#ffffff', '#000000', '#e5e5e5', '#191970']
     });
     confetti({
       ...defaults,
       particleCount,
       origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
-      colors: ['#ffffff', '#000000', '#e5e5e5', '#FFB6C1']
+      colors: ['#ffffff', '#000000', '#e5e5e5', '#191970']
     });
   }, 250);
 };
@@ -56,7 +56,7 @@ export const catBurst = () => {
     particleCount: 40,
     spread: 80,
     origin: { y: 0.6 },
-    colors: ['#ffffff', '#000000', '#FFB6C1']
+    colors: ['#ffffff', '#000000', '#191970']
   });
 };
 
@@ -71,7 +71,7 @@ export const flowerBurst = () => {
     particleCount: 50,
     spread: 100,
     origin: { y: 0.6 },
-    colors: ['#ffffff', '#FFB6C1', '#90EE90']
+    colors: ['#ffffff', '#191970', '#90EE90']
   });
 };
 

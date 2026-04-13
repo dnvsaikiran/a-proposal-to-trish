@@ -46,7 +46,7 @@ const GreetingFlow = ({ onComplete }) => {
             <h2 className="text-xl md:text-2xl font-royal italic text-black/70 mb-12">How was your day today, madam ji?</h2>
             <div className="flex flex-col gap-4 max-w-xs mx-auto">
               {['Nice 😊', 'Fine 🙂', 'Bad 😔 (Make it better!)'].map((label, i) => (
-                <button key={i} onClick={nextStep} className="btn-romantic" style={{ padding: '16px 40px', borderRadius: '9999px', backgroundColor: 'rgba(255, 255, 255, 0.8)', border: '1px solid rgba(255, 255, 255, 0.5)', fontWeight: 'bold' }}>
+                <button key={i} onClick={nextStep} className="btn-romantic">
                   {label}
                 </button>
               ))}

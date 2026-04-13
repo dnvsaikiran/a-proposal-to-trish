@@ -64,7 +64,26 @@
   }
 
   .btn-romantic {
-    @apply px-10 py-4 bg-white/80 border border-white/50 text-black rounded-full font-bold shadow-xl transition-all hover:scale-105 active:scale-95 hover:bg-black hover:text-white backdrop-blur-md;
+    @apply px-10 py-4 bg-white/10 border border-[#191970]/30 text-[#191970] rounded-full font-bold transition-all duration-500 backdrop-blur-xl relative overflow-hidden;
+    box-shadow: 0 4px 15px rgba(25, 25, 112, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.2);
+  }
+
+  .btn-romantic::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full transition-transform duration-1000;
+  }
+
+  .btn-romantic:hover {
+    @apply bg-[#191970] text-white scale-105 border-[#191970]/50;
+    box-shadow: 0 15px 35px rgba(25, 25, 112, 0.3), 0 0 20px rgba(25, 25, 112, 0.2);
+  }
+  
+  .btn-romantic:hover::before {
+    @apply translate-x-full;
+  }
+
+  .btn-romantic:active {
+    @apply scale-95;
   }
 
   .scroll-progress {

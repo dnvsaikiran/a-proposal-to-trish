@@ -9,7 +9,7 @@ const FloatingHearts = () => {
       {hearts.map((_, i) => (
         <motion.div
           key={i}
-          className="absolute text-pink-300/30"
+          className="absolute text-[#191970]/40"
           initial={{ 
             x: Math.random() * 100 + "%", 
             y: "110vh",

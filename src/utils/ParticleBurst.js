@@ -75,8 +75,41 @@ export const flowerBurst = () => {
   });
 };
 
+export const grandCelebration = () => {
+  const scalar = 3;
+  const coffee = confetti.shapeFromText({ text: '☕', scalar });
+  const bean = confetti.shapeFromText({ text: '🫘', scalar });
+  const lily = confetti.shapeFromText({ text: '🤍', scalar });
+  const rose = confetti.shapeFromText({ text: '🌸', scalar });
+  const leaf = confetti.shapeFromText({ text: '🌿', scalar });
+
+  const defaults = {
+    spread: 360,
+    ticks: 100,
+    gravity: 0.5,
+    decay: 0.94,
+    startVelocity: 30,
+    shapes: [coffee, bean, lily, rose, leaf],
+    colors: ['#6F4E37', '#ffffff', '#191970', '#90EE90']
+  };
+
+  confetti({
+    ...defaults,
+    particleCount: 80,
+    scalar: 1.2,
+    origin: { y: 0.6 }
+  });
+
+  confetti({
+    ...defaults,
+    particleCount: 40,
+    scalar: 0.75,
+    origin: { y: 0.6 }
+  });
+};
+
 export const magicalRandomBurst = () => {
-  const bursts = [celebrate, coffeeBurst, catBurst, flowerBurst];
+  const bursts = [celebrate, coffeeBurst, catBurst, flowerBurst, grandCelebration];
   const randomBurst = bursts[Math.floor(Math.random() * bursts.length)];
   randomBurst();
 };

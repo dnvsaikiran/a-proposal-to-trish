@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { coffeeBurst } from '../utils/ParticleBurst';
+import { grandCelebration } from '../utils/ParticleBurst';
 
 // Native Imports for reliable deployment
 import beachAnime from '../assets/beach_anime.png';
@@ -29,7 +29,7 @@ const GreetingFlow = ({ onComplete }) => {
 
   const nextStep = () => {
     setStep(s => s + 1);
-    coffeeBurst();
+    grandCelebration();
   };
 
   const steps = [

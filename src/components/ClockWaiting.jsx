@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Native Imports
-import nightBg from '../assets/decor/cozy_night_sky.png';
+import nightBg from '../assets/decor/cozy_night_sky_final.png';
 
 const Typewriter = ({ text, onComplete, delay = 50 }) => {
   const [displayedText, setDisplayedText] = useState('');

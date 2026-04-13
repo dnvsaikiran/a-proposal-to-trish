@@ -8,7 +8,7 @@ import firstMetAnime from '../assets/first_met_anime.png';
 import couple1Anime from '../assets/couple_1_anime.png';
 import couple2Anime from '../assets/couple_2_anime.png';
 import girlWithCat from '../assets/girl_with_cat.png';
-import step2Bg from '../assets/decor/background_step2.png';
+import step2Bg from '../assets/decor/background_step2_final.png';
 
 const TypewriterText = ({ text }) => {
   const [displayText, setDisplayText] = useState('');

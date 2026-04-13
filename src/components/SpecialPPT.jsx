@@ -7,7 +7,7 @@ import coupleConstant from '../assets/couple_bg_special.png';
 import bgCoffee from '../assets/gallery/coffeeshop.png';
 import bgMuseum from '../assets/gallery/museum.png';
 import bgAdventure from '../assets/gallery/adventure_park.png';
-import photoFrame from '../assets/decor/photo_frame.png';
+import photoFrame from '../assets/decor/photo_frame_final.png';
 
 const BASE = import.meta.env.BASE_URL;
 

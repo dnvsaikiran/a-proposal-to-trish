@@ -5,20 +5,23 @@ const BASE = import.meta.env.BASE_URL;
 const HardWorkScroll = ({ onComplete }) => {
   const { scrollYProgress } = useScroll();
   
-  const opacity1 = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
-  const y1 = useTransform(scrollYProgress, [0, 0.2], [50, 0]);
+  const opacity1 = useTransform(scrollYProgress, [0, 0.15], [0, 1]);
+  const y1 = useTransform(scrollYProgress, [0, 0.15], [50, 0]);
   
-  const opacity2 = useTransform(scrollYProgress, [0.2, 0.4], [0, 1]);
-  const x2 = useTransform(scrollYProgress, [0.2, 0.4], [-50, 0]);
+  const opacity2 = useTransform(scrollYProgress, [0.15, 0.35], [0, 1]);
+  const x2 = useTransform(scrollYProgress, [0.15, 0.35], [-50, 0]);
   
-  const opacity3 = useTransform(scrollYProgress, [0.4, 0.6], [0, 1]);
-  const scale3 = useTransform(scrollYProgress, [0.4, 0.6], [0.8, 1]);
+  const opacity3 = useTransform(scrollYProgress, [0.35, 0.55], [0, 1]);
+  const scale3 = useTransform(scrollYProgress, [0.35, 0.55], [0.8, 1]);
   
-  const opacity4 = useTransform(scrollYProgress, [0.6, 0.8], [0, 1]);
-  const y4 = useTransform(scrollYProgress, [0.6, 0.8], [100, 0]);
+  const opacity4 = useTransform(scrollYProgress, [0.55, 0.8], [0, 1]);
+  const scale4 = useTransform(scrollYProgress, [0.55, 0.8], [0.9, 1]);
+
+  const opacity5 = useTransform(scrollYProgress, [0.8, 1.0], [0, 1]);
+  const y5 = useTransform(scrollYProgress, [0.8, 1.0], [100, 0]);
 
   return (
-    <div className="relative bg-romantic-white min-h-[400vh]">
+    <div className="relative bg-romantic-white min-h-[550vh]">
       {/* Section 1: Introduction */}
       <section className="h-screen w-full flex items-center justify-center sticky top-0 px-6">
         <motion.div style={{ opacity: opacity1, y: y1 }} className="text-center max-w-3xl">
@@ -69,9 +72,36 @@ const HardWorkScroll = ({ onComplete }) => {
         </motion.div>
       </section>
 
-      {/* Section 4: The Invitation Hook */}
+      {/* Section 4: The Romantic Disclosure (Scroll) */}
+      <section className="h-screen w-full flex items-center justify-center sticky top-0 px-6 overflow-hidden">
+        <motion.div style={{ opacity: opacity4, scale: scale4 }} className="relative max-w-4xl w-full flex items-center justify-center">
+          {/* Scroll Asset */}
+          <img 
+            src={`${BASE}assets/decor/ancient_scroll.png`} 
+            alt="Ancient Scroll" 
+            className="w-full h-auto max-h-[90vh] object-contain drop-shadow-2xl"
+          />
+          
+          {/* Personal Message Overlay */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center p-12 md:p-24 text-center">
+            <p className="text-xl md:text-2xl lg:text-3xl font-hindi text-[#4a3728] leading-relaxed drop-shadow-sm">
+              Sonu, ek baat sach bataun? Mere aas pass bahut log aate hain, bahut se baatein hoti hain... par baaki sab mere liye sirf ek distraction hain.
+            </p>
+            <div className="h-4 md:h-8"></div>
+            <p className="text-xl md:text-2xl lg:text-3xl font-hindi text-[#5d2e2e] font-bold leading-relaxed">
+              Par tum... it brings a spark which I can't explain in words. It's a feeling that burns me in the best way possible. ❤️
+            </p>
+            <div className="h-4 md:h-8"></div>
+            <p className="text-lg md:text-xl font-hindi text-[#4a3728] italic">
+              Sirf tum hi ho jo mujhe is tarah mehsoos kara sakti ho.
+            </p>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Section 5: The Invitation Hook */}
       <section className="h-screen w-full flex items-center justify-center sticky top-0 px-6">
-        <motion.div style={{ opacity: opacity4, y: y4 }} className="text-center max-w-2xl">
+        <motion.div style={{ opacity: opacity5, y: y5 }} className="text-center max-w-2xl">
           <h2 className="text-3xl md:text-5xl font-hindi text-black mb-10 leading-snug">
             Itna stress lene ki zaroorat nahi hai, madam ji... 
           </h2>

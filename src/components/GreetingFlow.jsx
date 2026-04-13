@@ -8,6 +8,7 @@ import firstMetAnime from '../assets/first_met_anime.png';
 import couple1Anime from '../assets/couple_1_anime.png';
 import couple2Anime from '../assets/couple_2_anime.png';
 import girlWithCat from '../assets/girl_with_cat.png';
+import step2Bg from '../assets/decor/background_step2.png';
 
 const TypewriterText = ({ text }) => {
   const [displayText, setDisplayText] = useState('');
@@ -59,12 +60,15 @@ const GreetingFlow = ({ onComplete }) => {
     {
       id: "anime_met",
       content: (
-        <div className="text-center px-6 max-w-2xl mx-auto">
-          <h2 className="text-2xl font-hindi mb-10 text-black">Yaad hai hum pehli baar kab mile the? 🕰️</h2>
-          <div className="glass-premium p-4 rounded-[2rem] mb-12">
-            <img src={firstMetAnime} className="w-full h-[450px] object-cover rounded-[1.5rem] shadow-huge" />
+        <div className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 z-0 bg-cover bg-center opacity-40 blur-[2px]" style={{ backgroundImage: `url("${step2Bg}")` }}></div>
+          <div className="relative z-10 text-center px-6 max-w-2xl mx-auto">
+            <h2 className="text-2xl font-hindi mb-10 text-black drop-shadow-sm">Yaad hai hum pehli baar kab mile the? 🕰️</h2>
+            <div className="glass-premium p-4 rounded-[2rem] mb-12 border-white/50">
+              <img src={firstMetAnime} className="w-full h-[450px] object-cover rounded-[1.5rem] shadow-huge" />
+            </div>
+            <button onClick={nextStep} className="btn-romantic">I remember ❤️</button>
           </div>
-          <button onClick={nextStep} className="btn-romantic">I remember ❤️</button>
         </div>
       )
     },

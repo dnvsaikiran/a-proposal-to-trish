@@ -7,6 +7,7 @@ import coupleConstant from '../assets/couple_bg_special.png';
 import bgCoffee from '../assets/gallery/coffeeshop.png';
 import bgMuseum from '../assets/gallery/museum.png';
 import bgAdventure from '../assets/gallery/adventure_park.png';
+import photoFrame from '../assets/decor/photo_frame.png';
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -129,6 +130,11 @@ const SpecialPPT = ({ onComplete }) => {
           <div className="flower-corner bottom-4 left-4">🌸</div>
           <div className="flower-corner bottom-4 right-4">🤍</div>
 
+          {/* Main Floral Border Overlay */}
+          <div className="absolute inset-0 z-40 pointer-events-none p-4">
+            <img src={photoFrame} alt="" className="w-full h-full object-fill opacity-90 drop-shadow-lg" />
+          </div>
+
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
@@ -136,12 +142,12 @@ const SpecialPPT = ({ onComplete }) => {
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
               exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
               transition={{ duration: 0.8, ease: "anticipate" }}
-              className="w-full h-full relative flex items-center justify-center"
+              className="w-full h-full relative flex items-center justify-center p-8"
             >
               <img 
                 src={`${BASE}photos/${photos[currentIndex]}`}
                 alt={`Memory ${currentIndex}`}
-                className="max-w-full max-h-full object-contain rounded-[2rem] shadow-2xl"
+                className="max-w-full max-h-full object-contain rounded-[1.5rem] shadow-2xl relative z-30"
               />
 
               {/* Romantic Hinglish Message for the Last Photo */}

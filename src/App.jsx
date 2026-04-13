@@ -3,6 +3,7 @@ import GreetingFlow from './components/GreetingFlow';
 import SpecialPPT from './components/SpecialPPT';
 import HardWorkScroll from './components/HardWorkScroll';
 import CoffeeInvite from './components/CoffeeInvite';
+import ClockWaiting from './components/ClockWaiting';
 import DragonOverlay from './components/DragonOverlay';
 import FloatingHearts from './components/FloatingHearts';
 import MusicPlayer from './components/MusicPlayer';
@@ -33,7 +34,9 @@ const App = () => {
       case 'hard_work':
         return <HardWorkScroll onComplete={() => { setCurrentSection('coffee'); window.scrollTo(0, 0); }} />;
       case 'coffee':
-        return <CoffeeInvite onComplete={() => { setCurrentSection('greeting'); window.scrollTo(0, 0); }} />;
+        return <CoffeeInvite onComplete={() => { setCurrentSection('clock'); window.scrollTo(0, 0); }} />;
+      case 'clock':
+        return <ClockWaiting onComplete={() => { setCurrentSection('greeting'); window.scrollTo(0, 0); }} />;
       default:
         return <GreetingFlow onComplete={() => setCurrentSection('ppt')} />;
     }

@@ -1,37 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { celebrate } from '../utils/ParticleBurst';
 
 // Native Imports
 import cafeBackground from '../assets/cafe.png';
 
-const BASE = import.meta.env.BASE_URL;
-
 const CoffeeInvite = ({ onComplete }) => {
   const [noButtonState, setNoButtonState] = useState({
-    scale: 1,
     label: "Nahi 🙈",
-    clicks: 0
+    clicks: 0,
+    x: 0,
+    y: 0,
+    isVisible: true
   });
   const [isAccepted, setIsAccepted] = useState(false);
 
   const noLabels = [
-    "Nahi?", "Socho firse", "Pakka?", "Itna bhi kya", 
-    "Arey yaar", "Last try", "Tiny no"
+    "Nahi?", 
+    "Think really", 
+    "Are you sure?", 
+    "Sonu please? 🥺", 
+    "One more time check", 
+    "Almost there...", 
+    "Fine, I'm hiding!"
   ];
 
-  const handleNoClick = () => {
-    if (noButtonState.clicks >= noLabels.length - 1) {
-      setNoButtonState(prev => ({ ...prev, scale: 0 }));
+  const handleNoInteraction = useCallback(() => {
+    if (noButtonState.clicks >= 6) {
+      setNoButtonState(prev => ({ ...prev, isVisible: false }));
       return;
     }
+
+    // Move to a random position within safe bounds
+    const randomX = (Math.random() - 0.5) * 400; // ±200px
+    const randomY = (Math.random() - 0.5) * 400; // ±200px
+
     setNoButtonState(prev => ({
       ...prev,
-      scale: Math.max(0.1, prev.scale - 0.15),
-      label: noLabels[prev.clicks + 1],
-      clicks: prev.clicks + 1
+      clicks: prev.clicks + 1,
+      label: noLabels[Math.min(prev.clicks + 1, noLabels.length - 1)],
+      x: randomX,
+      y: randomY
     }));
-  };
+  }, [noButtonState.clicks]);
 
   const handleYesClick = () => {
     celebrate();
@@ -55,76 +66,72 @@ const CoffeeInvite = ({ onComplete }) => {
             exit={{ opacity: 0, scale: 1.1 }}
             className="relative z-20 glass-premium w-full max-w-2xl p-8 md:p-12 rounded-[4rem] text-center"
           >
-            <h2 className="text-3xl md:text-5xl font-hindi text-black mb-8 leading-relaxed">
-              Itni mehnat ke baad, mere saath ek cup coffee? ☕❤️
+            <h2 className="text-3xl md:text-5xl font-hindi text-black mb-12 leading-relaxed h-32 flex items-center justify-center">
+               Your evenings are mine... ☕❤️
             </h2>
             
-            <div className="w-full aspect-video rounded-[2rem] overflow-hidden mb-10 shadow-huge bg-black">
-              <video 
-                src={`${BASE}photos/VIDEO-2026-04-13-15-19-29.mp4`} 
-                controls 
-                autoPlay 
-                loop 
-                muted 
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            <p className="text-xl font-hindi text-black/70 mb-12">
-              Chalo thodi der ke liye duniya bhul jaate hain.
-            </p>
-
-            {noButtonState.scale === 0 && (
-              <p className="text-black font-bold mb-4 animate-bounce">
-                Ab toh sirf 'Haan' hi option hai madam ji! 😉
-              </p>
-            )}
-
-            <div className="flex flex-col items-center gap-6">
+            <div className="flex flex-col items-center gap-8">
               <motion.button
                 onClick={handleYesClick}
-                animate={{ scale: noButtonState.scale === 0 ? 1.4 : 1.1 }}
-                className="btn-romantic w-full py-5 text-xl bg-black text-white hover:bg-black/90"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="btn-3d-romantic w-full py-6 text-2xl !rounded-2xl shadow-xl flex items-center justify-center"
               >
-                Bilkul! ✨
+                Confirmed ✨
               </motion.button>
 
-              {noButtonState.scale > 0 && (
+              {noButtonState.isVisible && (
                 <motion.button
-                  onClick={handleNoClick}
-                  animate={{ scale: noButtonState.scale }}
-                  className="px-10 py-3 bg-white/40 text-black/60 rounded-full font-medium border border-black/10"
+                  onMouseEnter={handleNoInteraction}
+                  onClick={handleNoInteraction}
+                  animate={{ 
+                    x: noButtonState.x, 
+                    y: noButtonState.y,
+                    scale: Math.max(0.6, 1 - noButtonState.clicks * 0.1)
+                  }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className="px-10 py-3 bg-white/40 text-black/60 rounded-full font-medium border border-black/10 backdrop-blur-md"
                 >
                   {noButtonState.label}
                 </motion.button>
               )}
             </div>
+
+            {noButtonState.clicks >= 6 && (
+              <motion.p 
+                initial={{ opacity: 0 }} 
+                animate={{ opacity: 1 }} 
+                className="mt-8 text-black font-bold animate-bounce"
+              >
+                Pakda gaya! Ab sirf 'Confirmed' hi bacha hai! 😉
+              </motion.p>
+            )}
           </motion.div>
         ) : (
           <motion.div 
             key="success"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            className="relative z-20 text-center glass-premium p-16 rounded-[4rem]"
+            className="relative z-20 text-center glass-premium p-16 rounded-[4rem] bg-white/80"
           >
-            <h1 className="text-6xl mb-8">💖</h1>
-            <h2 className="text-4xl font-hindi text-black mb-6">See you soon, Sonu!</h2>
-            <p className="text-xl font-hindi text-black/60 mb-12">I knew you couldn't say no. Prepare for the best coffee date! ☕✨</p>
+            <motion.h1 
+              animate={{ scale: [1, 1.2, 1] }} 
+              transition={{ repeat: Infinity, duration: 2 }}
+              className="text-7xl mb-10"
+            >
+              💖
+            </motion.h1>
+            <h2 className="text-4xl font-hindi text-black mb-8">I knew it! ✨</h2>
+            <p className="text-2xl font-script text-black/70 mb-12">See you there, Sonu. Every evening is ours now.</p>
             <button 
               onClick={onComplete}
-              className="px-8 py-3 bg-black text-white rounded-full font-bold"
+              className="btn-3d-romantic w-full text-xl"
             >
-              Finish Journey
+              Aage Chalein? ❤️
             </button>
           </motion.div>
         )}
       </AnimatePresence>
-
-      <div className="wave-container fixed bottom-0 left-0">
-        <svg viewBox="0 24 150 28" preserveAspectRatio="none" className="wave-path">
-          <use href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,1)" />
-        </svg>
-      </div>
     </div>
   );
 };

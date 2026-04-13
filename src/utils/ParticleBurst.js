@@ -79,6 +79,7 @@ export const grandCelebration = () => {
   const scalar = 3;
   const coffee = confetti.shapeFromText({ text: '☕', scalar });
   const bean = confetti.shapeFromText({ text: '🫘', scalar });
+  const chicken = confetti.shapeFromText({ text: '🍗', scalar });
   const lily = confetti.shapeFromText({ text: '🤍', scalar });
   const rose = confetti.shapeFromText({ text: '🌸', scalar });
   const leaf = confetti.shapeFromText({ text: '🌿', scalar });
@@ -89,8 +90,8 @@ export const grandCelebration = () => {
     gravity: 0.5,
     decay: 0.94,
     startVelocity: 30,
-    shapes: [coffee, bean, lily, rose, leaf],
-    colors: ['#6F4E37', '#ffffff', '#191970', '#90EE90']
+    shapes: [coffee, bean, chicken, lily, rose, leaf],
+    colors: ['#6F4E37', '#ffffff', '#191970', '#90EE90', '#FFB6C1']
   };
 
   confetti({
